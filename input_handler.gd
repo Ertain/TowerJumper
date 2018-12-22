@@ -2,14 +2,15 @@ extends Control
 
 onready var game = get_node ("Spatial")
 onready var width = Globals.get("display/width")
+onready var bg_music = get_node("BG music")
 
 var last_pos = 0
 var is_pressed = false
 
 func _ready():
+	bg_music.play()
 	get_node("LevelLabel").set_text("Level " + str(global.level))
 	set_process_input(true)
-	pass
 
 func handle_pos (pos):	
 	if (!game.receive_input (pos)):
