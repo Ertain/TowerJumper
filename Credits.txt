@@ -6,3 +6,9 @@
 
 "copycat" composed by syncopika under the CC-BY 3.0 license
   Source: https://opengameart.org/content/copycat
+
+"endrit_tone" composed by Endrit Gega
+  Source: https://opengameart.org/content/teck-sound
+  
+"clouds" 1-5 by Sam under the CC0 license
+  Source: https://opengameart.org/content/cloud-set
