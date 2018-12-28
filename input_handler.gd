@@ -33,6 +33,8 @@ func _input(event):
 			handle_pos (float(-(event.pos.x - last_pos) * 100) / width)
 		else:
 			touchs_vec[event.index] = event.pos.x
-			
-	
-	
+
+func _on_pause_button_pressed():
+	print("Pause button pressed!")
+	get_tree().set_pause(true)
+	get_node("Pause menu").show()
