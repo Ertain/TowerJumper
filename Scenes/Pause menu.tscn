@@ -1,0 +1,69 @@
+[gd_scene load_steps=3 format=1]
+
+[ext_resource path="res://Fonts/points_font.fnt" type="BitmapFont" id=1]
+[ext_resource path="res://Fonts/Auchanted.fnt" type="BitmapFont" id=2]
+
+[node name="Pause menu" type="Node2D"]
+
+process/pause_mode = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+
+focus/ignore_mouse = false
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 94.0
+margin/top = 262.0
+margin/right = 631.0
+margin/bottom = 970.0
+
+[node name="Panel" type="Panel" parent="PanelContainer"]
+
+focus/ignore_mouse = false
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 7.0
+margin/top = 7.0
+margin/right = 530.0
+margin/bottom = 701.0
+
+[node name="Label" type="Label" parent="PanelContainer/Panel"]
+
+focus/ignore_mouse = true
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 0
+margin/left = 2.0
+margin/top = 36.0
+margin/right = 527.0
+margin/bottom = 126.0
+custom_fonts/font = ExtResource( 1 )
+text = "Pause"
+align = 1
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="return to game" type="Button" parent="PanelContainer/Panel"]
+
+hint/tooltip = "Return to the game!"
+focus/ignore_mouse = false
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 152.0
+margin/top = 374.0
+margin/right = 369.0
+margin/bottom = 466.0
+custom_fonts/font = ExtResource( 2 )
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+text = "Return to game"
+flat = false
+
+[connection signal="pressed" from="PanelContainer/Panel/return to game" to="." method="_on_return_to_game_pressed"]
+
+
