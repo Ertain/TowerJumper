@@ -1,7 +1,9 @@
-[gd_scene load_steps=3 format=1]
+[gd_scene load_steps=5 format=1]
 
 [ext_resource path="res://Fonts/points_font.fnt" type="BitmapFont" id=1]
 [ext_resource path="res://Fonts/Auchanted.fnt" type="BitmapFont" id=2]
+[ext_resource path="res://About.gd" type="Script" id=3]
+[ext_resource path="res://Exit game button.gd" type="Script" id=4]
 
 [node name="Pause menu" type="Node2D"]
 
@@ -17,6 +19,9 @@ margin/left = 94.0
 margin/top = 262.0
 margin/right = 631.0
 margin/bottom = 970.0
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="Panel" type="Panel" parent="PanelContainer"]
 
@@ -28,8 +33,11 @@ margin/left = 7.0
 margin/top = 7.0
 margin/right = 530.0
 margin/bottom = 701.0
+__meta__ = {
+"_edit_lock_": true
+}
 
-[node name="Label" type="Label" parent="PanelContainer/Panel"]
+[node name="Pause label" type="Label" parent="PanelContainer/Panel"]
 
 focus/ignore_mouse = true
 focus/stop_mouse = true
@@ -46,6 +54,24 @@ percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
 
+[node name="About button" type="Button" parent="PanelContainer/Panel"]
+
+focus/ignore_mouse = false
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 154.0
+margin/top = 295.0
+margin/right = 371.0
+margin/bottom = 367.0
+custom_fonts/font = ExtResource( 2 )
+toggle_mode = false
+click_on_press = true
+enabled_focus_mode = 2
+shortcut = null
+text = "About"
+flat = false
+
 [node name="return to game" type="Button" parent="PanelContainer/Panel"]
 
 hint/tooltip = "Return to the game!"
@@ -54,16 +80,94 @@ focus/stop_mouse = true
 size_flags/horizontal = 2
 size_flags/vertical = 2
 margin/left = 152.0
-margin/top = 374.0
+margin/top = 437.0
 margin/right = 369.0
-margin/bottom = 466.0
+margin/bottom = 509.0
 custom_fonts/font = ExtResource( 2 )
 toggle_mode = false
+click_on_press = true
 enabled_focus_mode = 2
 shortcut = null
 text = "Return to game"
 flat = false
 
+[node name="Exit button" type="Button" parent="PanelContainer/Panel"]
+
+focus/ignore_mouse = false
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 153.0
+margin/top = 572.0
+margin/right = 370.0
+margin/bottom = 644.0
+custom_fonts/font = ExtResource( 2 )
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+text = "Exit game"
+flat = false
+
+[node name="About Color Frame" type="ColorFrame" parent="PanelContainer/Panel"]
+
+visibility/visible = false
+focus/ignore_mouse = false
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 113.0
+margin/top = 338.0
+margin/right = 404.0
+margin/bottom = 400.0
+color = Color( 0.738281, 0.738281, 0.738281, 1 )
+script/script = ExtResource( 3 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="About box" type="Label" parent="PanelContainer/Panel/About Color Frame"]
+
+focus/ignore_mouse = false
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 0.0
+margin/top = 0.0
+margin/right = 286.0
+margin/bottom = 58.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "Copyright (C) 2018 Pipoypipa Games
+Licensed under the terms of the GNU General Public License v3"
+align = 1
+valign = 1
+autowrap = true
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="Exit game confirmation box" type="ConfirmationDialog" parent="PanelContainer/Panel"]
+
+visibility/visible = false
+focus/ignore_mouse = false
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 130.0
+margin/top = 338.0
+margin/right = 387.0
+margin/bottom = 454.0
+popup/exclusive = false
+window/title = "Please Confirm..."
+dialog/text = "Are you sure?"
+dialog/hide_on_ok = true
+script/script = ExtResource( 4 )
+
+[connection signal="pressed" from="PanelContainer/Panel/About button" to="PanelContainer/Panel/About Color Frame" method="_on_About_button_pressed"]
+
 [connection signal="pressed" from="PanelContainer/Panel/return to game" to="." method="_on_return_to_game_pressed"]
+
+[connection signal="pressed" from="PanelContainer/Panel/Exit button" to="PanelContainer/Panel/Exit game confirmation box" method="_on_Exit_button_pressed"]
+
+[connection signal="confirmed" from="PanelContainer/Panel/Exit game confirmation box" to="PanelContainer/Panel/Exit game confirmation box" method="_on_Exit_game_confirmation_box_confirmed"]
 
 
