@@ -769,7 +769,7 @@ environment = SubResource( 6 )
 h_offset = 0.0
 v_offset = 0.0
 target = NodePath("../Ball")
-speed = 0.01
+speed = 0.1
 enabled = true
 
 [connection signal="body_enter" from="RigidBody/Axis/Group/Area" to="." method="_on_Area_body_enter"]
