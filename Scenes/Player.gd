@@ -133,7 +133,7 @@ func _on_set_rotation (rot):
 		var adjustment_offset = -rotation_range.x
 		var local_normalized_intent_rotation = normalize_rot(intent_rotation + adjustment_offset)
 		var local_current_rotation =           normalize_rot(current_rotation + adjustment_offset)
-		var local_rotation_range = Vector2 (0, 0)
+		var local_rotation_range = 			   Vector2 (0, 0)
 		
 		# "Change basis" so second wall is at 180 degrees
 		adjustment_offset = -rotation_range.y		
@@ -156,25 +156,20 @@ func _on_set_rotation (rot):
 				intent_rotation = rotation_range.y
 						
 		if (!is_left):			
-			if (local_normalized_intent_rotation >= local_current_rotation and 
-				local_normalized_intent_rotation < 360):
-				#print ("GOOD A")
+			if (local_normalized_intent_rotation >= local_current_rotation - 1 and 
+				local_normalized_intent_rotation < 360):				
 				pass
-			else:
-				print ("BAD A", rotation_range.x)
-				intent_rotation = rotation_range.x
+			else:				
+				intent_rotation = rotation_range.x - 1				
 				has_collided = true				
 		else:
 			if (local_normalized_intent_rotation_2 > 0 and
-				local_normalized_intent_rotation_2 <= local_current_rotation_2):
-				#print ("GOOD B")
+				local_normalized_intent_rotation_2 <= local_current_rotation_2 + 1):				
 				pass
 			else:
-				print ("BAD B")
 				intent_rotation = rotation_range.y
 				has_collided = true
 
-	#print ("moviendo a ", intent_rotation, " desde ", current_rotation)
 
 	prev_frame_rotation = intent_rotation
 	set_player_rotation(normalize_rot(intent_rotation))
