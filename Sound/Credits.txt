@@ -9,3 +9,6 @@
   
 "Bouncy" composed by Ado under the CC0 license
   Source: https://opengameart.org/content/bouncy-tune
+
+"Moving higher" composed by David Kvistorf under the CC0 license
+  Source: https://opengameart.org/content/moving-higher
