@@ -11,9 +11,10 @@ func _ready():
 	set_process_input(true)
 
 func handle_pos (pos):	
-	if (!game.receive_input (pos)):		
+	var rot_pos = ((-(pos - last_pos) * 300) / width)
+	if (!game.receive_input (rot_pos)):		
 		game.lock_rot();		
-		last_pos = get_local_mouse_pos().x		
+		last_pos = pos
 		
 func _input(event):
 	if (event.type==InputEvent.SCREEN_TOUCH):
@@ -33,7 +34,7 @@ func _input(event):
 		touchs_vec[event.index] = event.pos.x
 		var a = event.pos.x
 		if (touchs_vec.size() == 1):
-			handle_pos (stepify(((-(event.pos.x - last_pos) * 300) / width), 0.01))
+			handle_pos (event.pos.x)
 
 func _on_pause_button_pressed():
 	get_tree().set_pause(true)
