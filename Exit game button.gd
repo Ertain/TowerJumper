@@ -1,7 +1,5 @@
 extends ConfirmationDialog
 
-onready var exit_game_button = get_node("../Exit button")
-
 func _on_Exit_button_pressed():
 	self.popup()
 

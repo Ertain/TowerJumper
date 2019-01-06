@@ -1,6 +1,5 @@
-extends ColorFrame
+extends Panel
 
-onready var about_button = get_node("../About button")
 func _ready():
 	set_process_input(true)
 

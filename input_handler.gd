@@ -36,7 +36,6 @@ func _input(event):
 			handle_pos (stepify(((-(event.pos.x - last_pos) * 300) / width), 0.01))
 
 func _on_pause_button_pressed():
-	print("Pause button pressed!")
 	get_tree().set_pause(true)
 	get_node("Pause menu").show()
 
