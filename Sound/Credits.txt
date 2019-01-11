@@ -12,3 +12,6 @@
 
 "Moving higher" composed by David Kvistorf under the CC0 license
   Source: https://opengameart.org/content/moving-higher
+
+"Neon Runner" composed by Eric Matyas under the CC-BY 4.0 license
+  Source:https://opengameart.org/content/neon-runner and http://www.soundimage.org
