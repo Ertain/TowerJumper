@@ -23,13 +23,14 @@ onready var acceleration_sound = get_node("AccelerationSound")
 
 var colliding = false
 
-var prev_frame_rotation = 0
+# number of complete loops made 
+var rotation_acumulator = 0
 
 var decal = preload("res://Scenes/decal.tscn")
 
 onready var last_safe_rotation = axis.get_rotation().y
 
-var counter = 0
+var platforms_counter = 0
 var rotation_range = Vector2(0,0)
 var movement_limited = false
 
@@ -86,17 +87,17 @@ func on_platform_passed():
 	release_camera()
 	rigid_2.set_linear_velocity(rigid.get_linear_velocity())
 		
-	global.update_points((counter + 1) * 10)
+	global.update_points((platforms_counter + 1) * 10)
 	global.update_progress()
 	
-	if (counter == 1 and global.sound_enabled):
+	if (platforms_counter == 1 and global.sound_enabled):
 		acceleration_sound.play(1.5)
 	
-	counter += 1
-	if (counter == n_platforms_to_meteorize - 1):
+	platforms_counter += 1
+	if (platforms_counter == n_platforms_to_meteorize - 1):
 		rigid.set_gravity_scale(0)
 	
-	if (counter >= n_platforms_to_meteorize):
+	if (platforms_counter >= n_platforms_to_meteorize):
 		meteor_particles.set_emitting(true)
 		meteorize()
 					
@@ -113,6 +114,7 @@ func normalize_rot(rot):
 	return rot
 
 func set_player_rotation (value):
+	rotation_acumulator = int(value / 360)	
 	axis.set_rotation_deg(Vector3(0,value,0))
 	camera_axis.set_rotation_deg(Vector3(0,value,0))
 
@@ -124,60 +126,37 @@ func is_in_range (v, r_a, r_b):
 func _on_set_rotation (rot):
 	var intent_rotation = rot + last_safe_rotation
 	var current_rotation = axis.get_rotation_deg().y;	
-
-	var has_collided = false	
-	var is_left = true	
+	var has_collided = false		
 	
-	if (movement_limited):		
-		# "Change basis" so first wall is at 180 degrees				
-		var adjustment_offset = -rotation_range.x
-		var local_normalized_intent_rotation = normalize_rot(intent_rotation + adjustment_offset)
-		var local_current_rotation =           normalize_rot(current_rotation + adjustment_offset)
-		var local_rotation_range = Vector2 (0, 0)
+	if (movement_limited):									
+		var local_rotation_range = Vector2(0,0)
 		
-		# "Change basis" so second wall is at 180 degrees
-		adjustment_offset = -rotation_range.y		
-		var local_normalized_intent_rotation_2 = normalize_rot(intent_rotation + adjustment_offset)
-		var local_current_rotation_2 =           normalize_rot(current_rotation + adjustment_offset)
-		var local_rotation_range_2 =             Vector2(0, 0)
+		if (current_rotation >= 0):
+			local_rotation_range = Vector2(rotation_range.x + rotation_acumulator * 360, 
+								    	   rotation_range.y + rotation_acumulator * 360)
+		else:
+			local_rotation_range = Vector2(-(360 - rotation_range.x) + rotation_acumulator * 360, 
+								    	   -(360 - rotation_range.y) + rotation_acumulator * 360)
 		
-		#print ("R ", local_rotation_range, " ", intent_rotation, " ", current_rotation)		
-		
-		if (intent_rotation > prev_frame_rotation):
-			is_left = false
-		
-		if (is_in_range(local_current_rotation, local_rotation_range.x, local_rotation_range.y) and 100 < 8):
-			var diff_a = abs(local_current_rotation - local_rotation_range.x)
-			var diff_b = abs(local_current_rotation - local_rotation_range.y)
+		if (is_in_range(current_rotation, local_rotation_range.x, local_rotation_range.y)):
+			var diff_a = abs(current_rotation - local_rotation_range.x)
+			var diff_b = abs(current_rotation - local_rotation_range.y)
 			
 			if (diff_a < diff_b):
-				intent_rotation = rotation_range.x
+				intent_rotation = rotation_range.x - 1
 			else:
-				intent_rotation = rotation_range.y
-						
-		if (!is_left):			
-			if (local_normalized_intent_rotation >= local_current_rotation and 
-				local_normalized_intent_rotation < 360):
-				#print ("GOOD A")
-				pass
-			else:
-				print ("BAD A", rotation_range.x)
-				intent_rotation = rotation_range.x
-				has_collided = true				
-		else:
-			if (local_normalized_intent_rotation_2 > 0 and
-				local_normalized_intent_rotation_2 <= local_current_rotation_2):
-				#print ("GOOD B")
-				pass
-			else:
-				print ("BAD B")
-				intent_rotation = rotation_range.y
-				has_collided = true
-
-	#print ("moviendo a ", intent_rotation, " desde ", current_rotation)
-
-	prev_frame_rotation = intent_rotation
-	set_player_rotation(normalize_rot(intent_rotation))
+				intent_rotation = rotation_range.y + 1 
+				
+			has_collided = true 		
+		
+		if (current_rotation < local_rotation_range.x and intent_rotation > local_rotation_range.x):
+			intent_rotation = local_rotation_range.x - 1
+			has_collided = true		
+		if (current_rotation > local_rotation_range.y and intent_rotation < local_rotation_range.y):
+			intent_rotation = local_rotation_range.y + 1
+			has_collided = true 
+	
+	set_player_rotation(intent_rotation)
 	return !has_collided
 
 func end_animation():
@@ -231,7 +210,7 @@ func _on_Area_body_enter(body):
 		splash.set_emitting(true)
 		animation.play("squeeze")
 			
-		counter = 0
+		platforms_counter = 0
 		meteor = false
 	
 func power_up():
