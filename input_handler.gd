@@ -3,6 +3,9 @@ extends Control
 onready var game = get_node ("Spatial")
 onready var width = Globals.get("display/width")
 
+export (int) var level = 0
+export (bool) var reset_level = false
+
 var last_pos = 0
 var touchs_vec = {}
 
