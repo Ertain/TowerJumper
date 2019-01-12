@@ -12,7 +12,7 @@ func _ready():
 	#   'fd9e9e' => 'Bouncy.ogg'
 	#   'd8d8d8' => 'endrit_tone.ogg'
 	#   'DB9DC5' => 'Moving higher.ogg'
-	#	'df3819' => 'Neon Runner.ogg'
+	#	'fcfff6' => 'Neon Runner.ogg'
 	if global.current_palette[0] == 'f5fd99':
 		var current_music = load( bg_music_stream[0] )
 		set_stream(current_music)
@@ -28,7 +28,7 @@ func _ready():
 	elif global.current_palette[0] == 'DB9DC5':
 		var current_music = load( bg_music_stream[4] )
 		set_stream( current_music )
-	elif global.current_palette[0] == 'df3819':
+	elif global.current_palette[0] == 'fcfff6':
 		var current_music = load ( bg_music_stream[5] )
 		set_stream( current_music )
 	else:

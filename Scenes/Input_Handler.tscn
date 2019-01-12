@@ -52,6 +52,8 @@ margin/top = 0.0
 margin/right = -360.0
 margin/bottom = 1280.0
 script/script = ExtResource( 1 )
+level = 0
+reset_level = false
 
 [node name="Spatial" parent="." instance=ExtResource( 2 )]
 
