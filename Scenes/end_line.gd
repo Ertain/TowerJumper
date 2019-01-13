@@ -6,7 +6,8 @@ func _on_Area_body_enter( body ):
 	if (global.sound_enabled):	
 		get_node("StreamPlayer").play(1)
 	disconnect("body_enter", self, "_on_Area_body_enter")
-	set_enable_monitoring(false)
+	# Debugger kept complaining about this bit, so it was commented out.
+	# set_enable_monitoring(false)
 	get_node("Timer").start()	
 	for child in get_node("Children").get_children():
 		child.explode()
