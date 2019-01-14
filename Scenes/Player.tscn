@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=1]
+[gd_scene load_steps=14 format=1]
 
 [ext_resource path="res://Scenes/Player.gd" type="Script" id=1]
 [ext_resource path="res://Materials/particle.tres" type="Material" id=2]
@@ -7,6 +7,7 @@
 [ext_resource path="res://Sound/jump.ogg" type="AudioStream" id=5]
 [ext_resource path="res://Sound/die.ogg" type="AudioStream" id=6]
 [ext_resource path="res://Sound/acceleration.ogg" type="AudioStream" id=7]
+[ext_resource path="res://slow motion timer.gd" type="Script" id=8]
 
 [sub_resource type="BoxShape" id=1]
 
@@ -759,6 +760,14 @@ v_offset = 0.0
 target = NodePath("../Ball")
 speed = 0.1
 enabled = true
+
+[node name="Slow motion timer" type="Timer" parent="."]
+
+process_mode = 1
+wait_time = 0.9
+one_shot = false
+autostart = false
+script/script = ExtResource( 8 )
 
 [connection signal="body_enter" from="RigidBody/Axis/Group/Area" to="." method="_on_Area_body_enter"]
 

@@ -76,13 +76,4 @@ shadow/zoffset_scale = 0.01
 transform/local = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.83688, 17.4298, 2.56991 )
 visibility/visible = false
 
-[node name="Slow timer" type="Timer" parent="."]
-
-process_mode = 0
-wait_time = 0.2
-one_shot = false
-autostart = false
-
-[connection signal="timeout" from="Slow timer" to="Player" method="_on_Slow_timer_timeout"]
-
 
