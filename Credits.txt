@@ -12,3 +12,7 @@
   
 "clouds" 1-5 by Sam under the CC0 license
   Source: https://opengameart.org/content/cloud-set
+
+"pause_icon.png" made by Niko Tolonen under CC0 license
+  Source: https://opengameart.org/content/pause-icon
+

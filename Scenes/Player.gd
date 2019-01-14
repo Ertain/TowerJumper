@@ -23,13 +23,14 @@ onready var acceleration_sound = get_node("AccelerationSound")
 
 var colliding = false
 
+# number of complete loops made 
+var rotation_acumulator = 0
+
 var decal = preload("res://Scenes/decal.tscn")
 
-onready var rotation = axis.get_rotation_deg()
-onready var last_safe_rotation = axis.get_rotation()
-onready var collision_rotation = axis.get_rotation()
+onready var last_safe_rotation = axis.get_rotation().y
 
-var counter = 0
+var platforms_counter = 0
 var rotation_range = Vector2(0,0)
 var movement_limited = false
 
@@ -82,91 +83,81 @@ func block_camera():
 func release_camera():	
 	rigid_2.set_sleeping(false)	
 
-func on_platform_passed():
+func on_platform_passed():	
 	release_camera()
-	rigid_2.set_linear_velocity(rigid.get_linear_velocity())	
+	rigid_2.set_linear_velocity(rigid.get_linear_velocity())
 		
-	global.update_points((counter + 1) * 10)
+	global.update_points((platforms_counter + 1) * 10)
 	global.update_progress()
 	
-	if (counter == 1 and global.sound_enabled):		
+	if (platforms_counter == 1 and global.sound_enabled):
 		acceleration_sound.play(1.5)
 	
-	counter += 1
-	if (counter == n_platforms_to_meteorize - 1):
+	platforms_counter += 1
+	if (platforms_counter == n_platforms_to_meteorize - 1):
 		rigid.set_gravity_scale(0)
 	
-	if (counter >= n_platforms_to_meteorize):						
+	if (platforms_counter >= n_platforms_to_meteorize):
 		meteor_particles.set_emitting(true)
 		meteorize()
 					
 
-func lock_rot():
-	last_safe_rotation = axis.get_rotation_deg()
-	rotation = axis.get_rotation_deg()	
+func lock_rot():	
+	last_safe_rotation = axis.get_rotation_deg().y	
 
-func normalize_rot(rot):
-	var changed = true
-	while (changed):
-		changed = false
-		if (rot >= 360):
-			rot -= 360
-			changed = true
-		elif (rot < 0):
-			rot += 360
-			changed = true
+func normalize_rot(rot):	
+	while (rot < 0):
+		rot += 360
+	while (rot > 360):
+		rot -= 360
 			
 	return rot
 
 func set_player_rotation (value):
+	rotation_acumulator = int(value / 360)	
 	axis.set_rotation_deg(Vector3(0,value,0))
 	camera_axis.set_rotation_deg(Vector3(0,value,0))
 
-func is_in_range (v, r_a, r_b):
-	# Hay bloqueo
-	if (r_a - r_b > 40):
-		if (r_a < r_b):
-			return (v < r_a or v > r_b)
-		else:
-			return (v < r_b or v > r_a)
-	else:
-		if (r_a < r_b):
-			return (v > r_a and v < r_b)
-		else:
-			return (v > r_b and v < r_a)
 
-func _on_set_rotation (rot):		
-	var intent_rotation = rot + last_safe_rotation.y
-	var rot_dir = axis.get_rotation_deg().y;
+func is_in_range (v, r_a, r_b):
+	return v > r_a and v < r_b
+			
+
+func _on_set_rotation (rot):
+	var intent_rotation = rot + last_safe_rotation
+	var current_rotation = axis.get_rotation_deg().y;	
+	var has_collided = false		
 	
-	if (movement_limited):
+	if (movement_limited):									
+		var local_rotation_range = Vector2(0,0)
 		
-		# CASE IN BETWEEN
-		if (is_in_range(intent_rotation, rotation_range.x, rotation_range.y)):			
-			var diff_a = abs(rot_dir - rotation_range.x)
-			var diff_b = abs(rot_dir - rotation_range.y)
+		if (current_rotation >= 0):
+			local_rotation_range = Vector2(rotation_range.x + rotation_acumulator * 360, 
+								    	   rotation_range.y + rotation_acumulator * 360)
+		else:
+			local_rotation_range = Vector2(-(360 - rotation_range.x) + rotation_acumulator * 360, 
+								    	   -(360 - rotation_range.y) + rotation_acumulator * 360)
+		
+		if (is_in_range(current_rotation, local_rotation_range.x, local_rotation_range.y)):
+			var diff_a = abs(current_rotation - local_rotation_range.x)
+			var diff_b = abs(current_rotation - local_rotation_range.y)
 			
 			if (diff_a < diff_b):
-				intent_rotation = rotation_range.x
+				intent_rotation = rotation_range.x - 1
 			else:
-				intent_rotation = rotation_range.y
+				intent_rotation = rotation_range.y + 1 
+				
+			has_collided = true 		
 		
-		
-		if (rotation_range.x < rotation_range.y):
-			# REGULAR CASE
-			if (rot_dir <= rotation_range.x and intent_rotation >= rotation_range.x): 				# PLAYER IS PRE WALL								
-				return false;
-			elif (rot_dir >= rotation_range.y and intent_rotation <= rotation_range.y):    			# PLAYER IS POST WALL								
-				return false;			
-		else: 												# INVERTED CASE			
-			var aux_norm = normalize_rot(intent_rotation)
-			if (rot_dir <= rotation_range.y and aux_norm <= rotation_range.y):    			# PLAYER IS POST WALL												
-				return false;
-			elif (rot_dir <= rotation_range.x and intent_rotation >= rotation_range.x): 				# PLAYER IS PRE WALL								
-				return false;
+		if (current_rotation < local_rotation_range.x and intent_rotation > local_rotation_range.x):
+			intent_rotation = local_rotation_range.x - 1
+			has_collided = true		
+		if (current_rotation > local_rotation_range.y and intent_rotation < local_rotation_range.y):
+			intent_rotation = local_rotation_range.y + 1
+			has_collided = true 
 	
-	set_player_rotation(normalize_rot(intent_rotation))
-	return true	
+	set_player_rotation(intent_rotation)
+	return !has_collided
 
 func end_animation():
 	ball.queue_free()	
@@ -219,7 +210,7 @@ func _on_Area_body_enter(body):
 		splash.set_emitting(true)
 		animation.play("squeeze")
 			
-		counter = 0
+		platforms_counter = 0
 		meteor = false
 	
 func power_up():
@@ -238,9 +229,9 @@ func meteorize():
 func _on_Timer_timeout():
 	global.handle_lose()
 
-func _on_Area_body_exit( body ):
+func _on_Area_body_exit( body ):	
 	colliding = false
 
-func _on_Area_area_enter( area ):
+func _on_Area_area_enter( area ):	
 	if (area.is_in_group("deleter") and !meteor):
 		block_camera()
