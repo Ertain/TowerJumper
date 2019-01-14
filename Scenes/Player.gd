@@ -21,8 +21,8 @@ onready var jump_sound = get_node("JumpSound")
 onready var die_sound = get_node("DieSound")
 onready var acceleration_sound = get_node("AccelerationSound")
 
-# Node for meteor slow down
-onready var slowdown_timer = get_parent().get_node("Slow timer")
+# For the slow motion effect in meteor dropping.
+onready var slow_motion_timer = get_node("Slow motion timer")
 
 var colliding = false
 
@@ -36,9 +36,6 @@ onready var last_safe_rotation = axis.get_rotation().y
 var platforms_counter = 0
 var rotation_range = Vector2(0,0)
 var movement_limited = false
-# For controlling slow motion
-var slow_motion_scaler = 0.1
-var slow_down = false
 
 export (int) var n_platforms_to_meteorize = 3
 
@@ -195,35 +192,30 @@ func _on_Area_body_enter(body):
 	else:
 		# Come screaming down at terminal velocity.
 		if (meteor):
-			# Set the timer to count down until the ball can resume
-			# normal speed.
-			if not slowdown_timer.is_active() and OS.get_time_scale() >= 1.0:
-				slowdown_timer.start()
 			unlimit_rotation_range()
 			global.update_points(100)
 			global.update_progress()
+			# Time to go up the family tree.
 			body.get_parent().get_parent().get_parent().get_parent().meteorize()
-			# Slow down time for a big dramatic effect.
-			# Source of effect: https://youtu.be/n4Hl1HStpn8?t=341
-			if slowdown_timer.is_active():
-				OS.set_time_scale(slow_motion_scaler)
-			else:
-				OS.set_time_scale(1.0)
-				slow_down = false
-			big_splash.set_emitting(true)					
+			# Start up slow motion timer. This is to control how much slow down
+			# we have.
+			slow_motion_timer.start()
+			big_splash.set_emitting(true)
 			rigid_2.apply_impulse(Vector3(0,0,0), Vector3(0,120,0))
 			release_camera()
 			rigid_2.apply_impulse(Vector3(0,0,0), Vector3(0,120,0))
 		# Do some bouncing.
 		else:
 			OS.set_time_scale(1.0)
+			if slow_motion_timer.is_active():
+				slow_motion_timer.stop()
 			if (global.sound_enabled):
 				jump_sound.play(0)
 			var aux = decal.instance()
 			body.get_parent().add_child(aux)
 			var tr = aux.get_global_transform()
 			tr.origin = decal_raycast.get_collision_point()
-			aux.set_global_transform(tr)			
+			aux.set_global_transform(tr)
 			aux.rotate_y(rand_range(0, 360))
 			aux.translate(Vector3(0,0.001,0))
 				
@@ -257,7 +249,3 @@ func _on_Area_body_exit( body ):
 func _on_Area_area_enter( area ):	
 	if (area.is_in_group("deleter") and !meteor):
 		block_camera()
-
-
-func _on_Slow_timer_timeout():
-	slow_down = true
