@@ -23,6 +23,7 @@ onready var acceleration_sound = get_node("AccelerationSound")
 
 # For the slow motion effect in meteor dropping.
 onready var slow_motion_timer = get_node("Slow motion timer")
+var slow_motion = false
 
 var colliding = false
 
@@ -62,6 +63,21 @@ func _ready():
 	light.set_color(1,color)
 	# Just in case slow motion is on.
 	OS.set_time_scale(1.0)
+
+# This is only meant for the "slow motion" effect when the
+# ball reaches terminal velocity, a.k.a. the meteor effect.
+func _process(delta):
+	# Inspiration for code found here: https://youtu.be/n4Hl1HStpn8?t=369
+	if slow_motion:
+		if OS.get_time_scale() > 0.1:
+			OS.set_time_scale( OS.get_time_scale() - (5 * delta) )
+		else:
+			OS.set_time_scale(0.1)
+	else:
+		if OS.get_time_scale() < 1:
+			OS.set_time_scale( OS.get_time_scale() + (5 + delta) )
+		else:
+			OS.set_time_scale(1)
 
 func die():
 	trail.set_emitting(false)
@@ -197,9 +213,14 @@ func _on_Area_body_enter(body):
 			global.update_progress()
 			# Time to go up the family tree.
 			body.get_parent().get_parent().get_parent().get_parent().meteorize()
-			# Start up slow motion timer. This is to control how much slow down
-			# we have.
-			slow_motion_timer.start()
+			# When the ball hits the platform, the ball slows down.
+			if slow_motion:
+				set_process(false)
+				slow_motion = false
+			else:
+				set_process(true)
+				slow_motion = true
+				slow_motion_timer.start()
 			big_splash.set_emitting(true)
 			rigid_2.apply_impulse(Vector3(0,0,0), Vector3(0,120,0))
 			release_camera()
@@ -207,8 +228,6 @@ func _on_Area_body_enter(body):
 		# Do some bouncing.
 		else:
 			OS.set_time_scale(1.0)
-			if slow_motion_timer.is_active():
-				slow_motion_timer.stop()
 			if (global.sound_enabled):
 				jump_sound.play(0)
 			var aux = decal.instance()
@@ -249,3 +268,8 @@ func _on_Area_body_exit( body ):
 func _on_Area_area_enter( area ):	
 	if (area.is_in_group("deleter") and !meteor):
 		block_camera()
+
+# The slow motion effect shouldn't last that long (if
+# that makes sense...)
+func _on_Slow_motion_timer_timeout():
+	slow_motion = false
