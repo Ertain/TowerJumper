@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=1]
+[gd_scene load_steps=12 format=1]
 
 [ext_resource path="res://input_handler.gd" type="Script" id=1]
 [ext_resource path="res://Scenes/Column.tscn" type="PackedScene" id=2]
@@ -9,7 +9,6 @@
 [ext_resource path="res://Scenes/button_shadow.tres.gd" type="Script" id=7]
 [ext_resource path="res://Sprites/pause_icon.png" type="Texture" id=8]
 [ext_resource path="res://Scenes/Pause menu.tscn" type="PackedScene" id=9]
-[ext_resource path="res://Scenes/Pause menu.gd" type="Script" id=10]
 
 [sub_resource type="StyleBoxFlat" id=1]
 
@@ -195,7 +194,7 @@ toggle_mode = false
 enabled_focus_mode = 2
 shortcut = null
 icon = ExtResource( 8 )
-flat = false
+flat = true
 
 [node name="pause_icon" type="Sprite" parent="pause button"]
 
@@ -207,7 +206,6 @@ texture = ExtResource( 8 )
 [node name="Pause menu" parent="." instance=ExtResource( 9 )]
 
 visibility/visible = false
-script/script = ExtResource( 10 )
 
 [connection signal="pressed" from="pause button" to="." method="_on_pause_button_pressed"]
 

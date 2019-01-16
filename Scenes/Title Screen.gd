@@ -5,6 +5,12 @@ onready var fade_out = get_node("fade-out rect/fade-out anim")
 
 func _ready():
 	bg_music.play()
+	set_process_input(true)
+
+func _input(event):
+	if event.type == InputEvent.SCREEN_TOUCH && event.pressed:
+		get_node("fade-out rect").show()
+		fade_out.play("fade-out anim")
 
 # Fade out the scene
 func _on_Start_game_pressed():
