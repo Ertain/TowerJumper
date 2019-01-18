@@ -1,7 +1,8 @@
 extends StreamPlayer
 
 var bg_music_stream = ['res://Sound/copycat.ogg', 'res://Sound/happy bgm.ogg', 'res://Sound/endrit_tone.ogg',
-						'res://Sound/Bouncy.ogg', 'res://Sound/Moving higher.ogg','res://Sound/Neon Runner.ogg']
+						'res://Sound/Bouncy.ogg', 'res://Sound/Moving higher.ogg','res://Sound/Neon Runner.ogg',
+						"res://Sound/That's it for today (LOOP).ogg"]
 
 func _ready():
 	# Set the mood for each level! Match the music to each color.
@@ -29,7 +30,10 @@ func _ready():
 		var current_music = load( bg_music_stream[4] )
 		set_stream( current_music )
 	elif global.current_palette[0] == 'fcfff6':
-		var current_music = load ( bg_music_stream[5] )
+		var current_music = load( bg_music_stream[5] )
+		set_stream( current_music )
+	elif global.current_palette[0] == 'cea7e5':
+		var current_music = load( bg_music_stream[6] )
 		set_stream( current_music )
 	else:
 		var current_music = load( bg_music_stream[0] )
