@@ -1,17 +1,33 @@
-[gd_scene load_steps=10 format=1]
+[gd_scene load_steps=11 format=1]
 
 [ext_resource path="res://Scenes/Title Screen.gd" type="Script" id=1]
-[ext_resource path="res://Sound/Bouncy and Percussion by Rotten_Doll.ogg" type="AudioStream" id=2]
+[ext_resource path="res://Sound/Jungle Groove Grove.ogg" type="AudioStream" id=2]
 [ext_resource path="res://Sprites/cloud1.png" type="Texture" id=3]
 [ext_resource path="res://Sprites/cloud3.png" type="Texture" id=4]
 [ext_resource path="res://Sprites/cloud2.png" type="Texture" id=5]
 [ext_resource path="res://Sprites/cloud5.png" type="Texture" id=6]
-[ext_resource path="res://Fonts/Magic.fnt" type="BitmapFont" id=7]
+[ext_resource path="res://Sprites/title screen logo.png" type="Texture" id=7]
 [ext_resource path="res://Fonts/FreeSerif.fnt" type="BitmapFont" id=8]
 
 [sub_resource type="Animation" id=1]
 
-resource/name = "fade-out anim"
+resource/name = "Blinking text"
+length = 1.5
+loop = true
+step = 0.05
+tracks/0/type = "value"
+tracks/0/path = NodePath("Tap to Start:visibility/visible")
+tracks/0/interp = 1
+tracks/0/imported = false
+tracks/0/keys = {
+"times": FloatArray( 0, 0.7, 1.35 ),
+"transitions": FloatArray( 1, 1, 1 ),
+"update": 1,
+"values": [ true, false, true ]
+}
+
+[sub_resource type="Animation" id=2]
+
 length = 0.4
 loop = false
 step = 0.1
@@ -28,8 +44,6 @@ tracks/0/keys = {
 
 [node name="Title Screen" type="Node2D"]
 
-transform/pos = Vector2( -0.342196, -0.490086 )
-transform/scale = Vector2( 0.989306, 0.984685 )
 script/script = ExtResource( 1 )
 
 [node name="BG music" type="StreamPlayer" parent="."]
@@ -45,117 +59,112 @@ stream/buffering_ms = 500
 
 [node name="background color" type="ColorFrame" parent="."]
 
+anchor/left = 3
+anchor/top = 3
+anchor/right = 3
+anchor/bottom = 3
 focus/ignore_mouse = false
 focus/stop_mouse = true
-size_flags/horizontal = 2
-size_flags/vertical = 2
-margin/left = 2.0
-margin/top = 6.0
-margin/right = 731.0
-margin/bottom = 1300.0
+size_flags/horizontal = 3
+size_flags/vertical = 3
+margin/left = 33.0
+margin/top = 35.0
+margin/right = -691.0
+margin/bottom = -1250.0
 color = Color( 0.527344, 0.900299, 1, 1 )
-
-[node name="cloud1" type="Sprite" parent="background color"]
-
-transform/pos = Vector2( 223.01, 211.318 )
-transform/scale = Vector2( 0.244162, 0.244162 )
-texture = ExtResource( 3 )
-
-[node name="cloud3" type="Sprite" parent="background color"]
-
-transform/pos = Vector2( 584.167, 113.413 )
-transform/scale = Vector2( 0.245046, 0.245046 )
-texture = ExtResource( 4 )
-
-[node name="cloud2" type="Sprite" parent="background color"]
-
-transform/pos = Vector2( 477.917, 567.884 )
-transform/scale = Vector2( 0.362567, 0.362566 )
-texture = ExtResource( 5 )
-
-[node name="cloud5" type="Sprite" parent="background color"]
-
-transform/pos = Vector2( 319.927, 809.106 )
-transform/scale = Vector2( 0.25145, 0.25145 )
-texture = ExtResource( 6 )
-
-[node name="CenterContainer" type="CenterContainer" parent="."]
-
-focus/ignore_mouse = false
-focus/stop_mouse = true
-size_flags/horizontal = 2
-size_flags/vertical = 2
-margin/left = 2.0
-margin/top = 230.0
-margin/right = 728.0
-margin/bottom = 426.0
-use_top_left = false
 __meta__ = {
 "_edit_lock_": true
 }
 
-[node name="Label" type="Label" parent="CenterContainer"]
+[node name="cloud1" type="Sprite" parent="background color"]
 
-focus/ignore_mouse = true
-focus/stop_mouse = true
-size_flags/horizontal = 2
-size_flags/vertical = 0
-margin/left = 180.0
-margin/top = 62.0
-margin/right = 545.0
-margin/bottom = 133.0
-custom_fonts/font = ExtResource( 7 )
-custom_colors/font_color = Color( 0, 0, 0, 1 )
-text = "Tower Jumper"
-align = 1
-valign = 1
-percent_visible = 1.0
-lines_skipped = 0
-max_lines_visible = -1
+transform/pos = Vector2( 528.025, 180.551 )
+transform/scale = Vector2( 0.45083, 0.45083 )
+texture = ExtResource( 3 )
 
-[node name="CenterContainer 2" type="CenterContainer" parent="."]
+[node name="cloud3" type="Sprite" parent="background color"]
 
+transform/pos = Vector2( 833.118, 814.805 )
+transform/scale = Vector2( 0.355437, 0.355437 )
+texture = ExtResource( 4 )
+
+[node name="cloud2" type="Sprite" parent="background color"]
+
+transform/pos = Vector2( 683.417, 1212.57 )
+transform/scale = Vector2( 0.628752, 0.628752 )
+texture = ExtResource( 5 )
+
+[node name="cloud5" type="Sprite" parent="background color"]
+
+transform/pos = Vector2( 287.985, 618.951 )
+transform/scale = Vector2( 0.278091, 0.278091 )
+texture = ExtResource( 6 )
+
+[node name="Title Center" type="CenterContainer" parent="."]
+
+anchor/left = 3
+anchor/top = 3
+anchor/right = 3
+anchor/bottom = 3
 focus/ignore_mouse = false
 focus/stop_mouse = true
 size_flags/horizontal = 2
 size_flags/vertical = 2
-margin/left = 4.0
-margin/top = 584.0
-margin/right = 731.0
-margin/bottom = 838.0
+margin/left = 32.0
+margin/top = -192.0
+margin/right = -692.0
+margin/bottom = -499.0
 use_top_left = false
 
-[node name="Start game" type="Button" parent="CenterContainer 2"]
+[node name="Title logo texture" type="TextureFrame" parent="Title Center"]
 
-visibility/visible = false
+focus/ignore_mouse = true
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 91.0
+margin/top = 1.0
+margin/right = 632.0
+margin/bottom = 305.0
+texture = ExtResource( 7 )
+stretch_mode = 0
+
+[node name="Start container" type="CenterContainer" parent="."]
+
 focus/ignore_mouse = false
 focus/stop_mouse = true
 size_flags/horizontal = 2
 size_flags/vertical = 2
-margin/left = 251.0
-margin/top = 107.0
-margin/right = 475.0
-margin/bottom = 146.0
-custom_fonts/font = ExtResource( 8 )
-toggle_mode = false
-enabled_focus_mode = 2
-shortcut = null
-text = "Start the game!"
-flat = false
+margin/left = 3.0
+margin/top = 660.0
+margin/right = 725.0
+margin/bottom = 805.0
+use_top_left = false
 
-[node name="Label" type="Label" parent="CenterContainer 2"]
+[node name="Blinking text" type="AnimationPlayer" parent="Start container"]
+
+playback/process_mode = 1
+playback/default_blend_time = 0.0
+root/root = NodePath("..")
+"anims/Blinking text" = SubResource( 1 )
+playback/active = true
+playback/speed = 1.0
+blend_times = [  ]
+autoplay = ""
+
+[node name="Tap to Start" type="Label" parent="Start container"]
 
 focus/ignore_mouse = true
 focus/stop_mouse = true
 size_flags/horizontal = 2
 size_flags/vertical = 0
-margin/left = 255.0
-margin/top = 110.0
-margin/right = 471.0
-margin/bottom = 143.0
+margin/left = 273.0
+margin/top = 56.0
+margin/right = 448.0
+margin/bottom = 89.0
 custom_fonts/font = ExtResource( 8 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
-text = "Tap the screen!"
+text = "Tap to Start!"
 percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
@@ -165,29 +174,24 @@ max_lines_visible = -1
 visibility/visible = false
 focus/ignore_mouse = false
 focus/stop_mouse = true
-size_flags/horizontal = 2
-size_flags/vertical = 2
-margin/left = 0.0
-margin/top = -1.0
-margin/right = 913.0
-margin/bottom = 1411.0
+size_flags/horizontal = 3
+size_flags/vertical = 3
+margin/left = 2.0
+margin/top = 8.0
+margin/right = 725.0
+margin/bottom = 1279.0
 color = Color( 0, 0, 0, 0 )
-__meta__ = {
-"_edit_lock_": true
-}
 
 [node name="fade-out anim" type="AnimationPlayer" parent="fade-out rect"]
 
 playback/process_mode = 1
 playback/default_blend_time = 0.0
 root/root = NodePath("..")
-"anims/fade-out anim" = SubResource( 1 )
+"anims/fade-out anim" = SubResource( 2 )
 playback/active = true
 playback/speed = 1.0
 blend_times = [  ]
 autoplay = ""
-
-[connection signal="pressed" from="CenterContainer 2/Start game" to="." method="_on_Start_game_pressed"]
 
 [connection signal="finished" from="fade-out rect/fade-out anim" to="." method="_on_fadeout_anim_finished"]
 

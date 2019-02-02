@@ -36,6 +36,7 @@ func _input(event):
 		if (touchs_vec.size() == 1):
 			handle_pos (event.pos.x)
 
+# Pause the game
 func _on_pause_button_pressed():
 	get_tree().set_pause(true)
 	get_node("Pause menu").show()
