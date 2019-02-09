@@ -20,7 +20,8 @@
     ["d8d8d8", "414141", "7b5f5f"],
     ["DB9DC5", "732991", "579AA3"],
 
-    ["fcfff6", "c51eda", "030009"]
+    ["fcfff6", "c51eda", "030009"],
+    ["93eebd", "4b485e", "3f5e4e"]
   ],
   "shadow_button_pattern" : {
     "enabled"  : [0, 0, 0, 0, 1, 1, 1, 1],
