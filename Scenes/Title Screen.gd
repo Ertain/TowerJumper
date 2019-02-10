@@ -7,9 +7,12 @@ onready var blinking_text_anim = get_node("Title screen container/bg color/VBoxC
 onready var title_screen_container = get_node("Title screen container")
 
 func _ready():
+	
 	# Stretch the container to the size of the screen
 	var screen_size = OS.get_screen_size()
-	title_screen_container.set_size( Vector2( screen_size.x, title_screen_container.get_size().y ) )
+	var port_size = get_tree().get_root().get_visible_rect().size
+	if screen_size.length() > port_size.length():
+		title_screen_container.set_size( Vector2( screen_size.x, title_screen_container.get_size().y ) )
 	
 	# Start the background music
 	bg_music.play()
