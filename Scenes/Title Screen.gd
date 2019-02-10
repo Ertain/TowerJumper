@@ -11,7 +11,7 @@ func _ready():
 	# Stretch the container to the size of the screen
 	var screen_size = OS.get_screen_size()
 	var port_size = get_tree().get_root().get_visible_rect().size
-	if screen_size.length() > port_size.length():
+	if (port_size.length() < Vector2(720, 1280).length() ) or ( screen_size.length() > port_size.length() ):
 		title_screen_container.set_size( Vector2( screen_size.x, title_screen_container.get_size().y ) )
 	
 	# Start the background music
