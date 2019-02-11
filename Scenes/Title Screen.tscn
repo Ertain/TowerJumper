@@ -100,7 +100,7 @@ margin/bottom = 40.0
 
 [node name="cloud5" type="Sprite" parent="Title screen container/bg color/MarginContainer"]
 
-transform/pos = Vector2( 690.446, 970.693 )
+transform/pos = Vector2( 610.475, 989.148 )
 transform/scale = Vector2( 0.342087, 0.342087 )
 texture = ExtResource( 3 )
 
@@ -118,13 +118,13 @@ texture = ExtResource( 5 )
 
 [node name="cloud1" type="Sprite" parent="Title screen container/bg color/MarginContainer"]
 
-transform/pos = Vector2( 983.968, 685.144 )
+transform/pos = Vector2( 834.279, 640.032 )
 transform/scale = Vector2( 0.561531, 0.561531 )
 texture = ExtResource( 6 )
 
 [node name="cloud2 2" type="Sprite" parent="Title screen container/bg color/MarginContainer"]
 
-transform/pos = Vector2( 978.104, 1290.38 )
+transform/pos = Vector2( 379.347, 1308.83 )
 transform/scale = Vector2( 0.662507, 0.662507 )
 texture = ExtResource( 4 )
 
