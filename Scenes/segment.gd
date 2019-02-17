@@ -1,14 +1,5 @@
 extends Spatial
 
-# class member variables go here, for example:
-# var a = 2
-# var b = "textvar"
-
-func _ready():
-	# Called every time the node is added to the scene.
-	# Initialization here
-	pass
-
 func set_material(material):	
 	get_node("REGULAR").set_material_override(material)
 	get_node("REGULAR/Cover").set_material_override(material)
