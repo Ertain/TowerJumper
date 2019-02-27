@@ -1,7 +1,7 @@
 [gd_scene load_steps=12 format=1]
 
 [ext_resource path="res://Scenes/Title Screen.gd" type="Script" id=1]
-[ext_resource path="res://Sound/jump and run - tropics.ogg" type="AudioStream" id=2]
+[ext_resource path="res://Sound/Latin 1.ogg" type="AudioStream" id=2]
 [ext_resource path="res://Sprites/cloud5.png" type="Texture" id=3]
 [ext_resource path="res://Sprites/cloud2.png" type="Texture" id=4]
 [ext_resource path="res://Sprites/cloud3.png" type="Texture" id=5]
@@ -56,7 +56,7 @@ script/script = ExtResource( 1 )
 
 stream/stream = ExtResource( 2 )
 stream/play = false
-stream/loop = false
+stream/loop = true
 stream/volume_db = 0.0
 stream/autoplay = false
 stream/paused = false

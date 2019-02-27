@@ -10,7 +10,7 @@
 "endrit_tone" composed by Endrit Gega
   Source: https://opengameart.org/content/teck-sound
   
-"clouds" 1-5 by Sam under the CC0 license
+"clouds 1-5" by Sam under the CC0 license
   Source: https://opengameart.org/content/cloud-set
 
 "pause_icon.png" made by Niko Tolonen under CC0 license
@@ -24,3 +24,6 @@
 
 "Jump and Run - Tropical Mix" by Bart under the CCA-BY-SA 3.0 license
   Source: https://opengameart.org/content/jump-and-run-tropical-mix
+
+"Latin 1" copyright Dan Knoflicek under the CCA-BY 3.0 license
+  Source: https://opengameart.org/content/latin-loop
