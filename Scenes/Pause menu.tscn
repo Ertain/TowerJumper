@@ -179,7 +179,7 @@ margin/right = 522.0
 margin/bottom = 126.0
 custom_fonts/font = ExtResource( 3 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
-text = "Pause"
+text = "PAUSE_MENU_TITLE"
 align = 1
 percent_visible = 1.0
 lines_skipped = 0
@@ -205,7 +205,6 @@ dialog/hide_on_ok = true
 
 [node name="Mister Center Container" type="CenterContainer" parent="Panel"]
 
-editor/display_folded = true
 anchor/right = 1
 anchor/bottom = 1
 focus/ignore_mouse = false
@@ -267,7 +266,7 @@ toggle_mode = false
 click_on_press = true
 enabled_focus_mode = 2
 shortcut = null
-text = "About"
+text = "ABOUT_BUTTON"
 flat = false
 
 [node name="Return control" type="Control" parent="Panel/Mister Center Container/VBoxContainer"]
@@ -302,7 +301,7 @@ toggle_mode = false
 click_on_press = true
 enabled_focus_mode = 2
 shortcut = null
-text = "Return to game"
+text = "RETURN_TO_GAME_BUTTON"
 flat = false
 
 [node name="Exit control" type="Control" parent="Panel/Mister Center Container/VBoxContainer"]
@@ -333,7 +332,7 @@ custom_colors/font_color = Color( 0, 0, 0, 1 )
 toggle_mode = false
 enabled_focus_mode = 2
 shortcut = null
-text = "Exit game"
+text = "EXIT_GAME_BUTTON"
 flat = false
 
 [node name="About panel" type="Panel" parent="Panel"]
@@ -365,13 +364,7 @@ margin/right = 460.0
 margin/bottom = 617.0
 custom_fonts/font = ExtResource( 7 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
-text = "Copyright (C) 2018 Pipoypipa Games
-
-Licensed under the terms of the GNU General Public License v3
-
-UI elements by Kenney Vleugels (www.kenney.nl) under CC0 license
-
-More copyright information is available in the \"Credits.txt\" file of main Github repository"
+text = "ABOUT_TEXT"
 align = 1
 valign = 1
 autowrap = true
