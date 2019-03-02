@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=1]
+[gd_scene load_steps=19 format=1]
 
 [ext_resource path="res://Scenes/Pause menu.gd" type="Script" id=1]
 [ext_resource path="res://Tower Jumper theme.tres" type="Theme" id=2]
@@ -9,9 +9,7 @@
 [ext_resource path="res://Fonts/OpenDyslexicAlta-regular.fnt" type="BitmapFont" id=7]
 [ext_resource path="res://UI/Kenney's UI pack/PNG/green_panel.png" type="Texture" id=8]
 [ext_resource path="res://Scenes/About.gd" type="Script" id=9]
-[ext_resource path="res://Fonts/Auchanted.fnt" type="BitmapFont" id=10]
-[ext_resource path="res://Scenes/Confirm dialog.tscn" type="PackedScene" id=11]
-
+[ext_resource path="res://Scenes/Confirm dialog.tscn" type="PackedScene" id=10]
 
 [sub_resource type="StyleBoxTexture" id=1]
 
@@ -181,7 +179,7 @@ margin/right = 522.0
 margin/bottom = 126.0
 custom_fonts/font = ExtResource( 3 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
-text = "Pause"
+text = "PAUSE_MENU_TITLE"
 align = 1
 percent_visible = 1.0
 lines_skipped = 0
@@ -268,7 +266,7 @@ toggle_mode = false
 click_on_press = true
 enabled_focus_mode = 2
 shortcut = null
-text = "About"
+text = "ABOUT_BUTTON"
 flat = false
 
 [node name="Return control" type="Control" parent="Panel/Mister Center Container/VBoxContainer"]
@@ -303,7 +301,7 @@ toggle_mode = false
 click_on_press = true
 enabled_focus_mode = 2
 shortcut = null
-text = "Return to game"
+text = "RETURN_TO_GAME_BUTTON"
 flat = false
 
 [node name="Exit control" type="Control" parent="Panel/Mister Center Container/VBoxContainer"]
@@ -334,7 +332,7 @@ custom_colors/font_color = Color( 0, 0, 0, 1 )
 toggle_mode = false
 enabled_focus_mode = 2
 shortcut = null
-text = "Exit game"
+text = "EXIT_GAME_BUTTON"
 flat = false
 
 [node name="About panel" type="Panel" parent="Panel"]
@@ -344,10 +342,10 @@ focus/ignore_mouse = false
 focus/stop_mouse = true
 size_flags/horizontal = 2
 size_flags/vertical = 2
-margin/left = 107.0
-margin/top = 249.0
-margin/right = 424.0
-margin/bottom = 431.0
+margin/left = 16.0
+margin/top = 20.0
+margin/right = 498.0
+margin/bottom = 656.0
 custom_styles/panel = SubResource( 8 )
 script/script = ExtResource( 9 )
 __meta__ = {
@@ -360,14 +358,13 @@ focus/ignore_mouse = false
 focus/stop_mouse = true
 size_flags/horizontal = 2
 size_flags/vertical = 2
-margin/left = 10.0
-margin/top = 0.0
-margin/right = 304.0
-margin/bottom = 181.0
-custom_fonts/font = ExtResource( 10 )
+margin/left = 12.0
+margin/top = 38.0
+margin/right = 460.0
+margin/bottom = 617.0
+custom_fonts/font = ExtResource( 7 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
-text = "Copyright (C) 2018 Pipoypipa Games
-Licensed under the terms of the GNU General Public License v3"
+text = "ABOUT_TEXT"
 align = 1
 valign = 1
 autowrap = true
@@ -375,7 +372,7 @@ percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
 
-[node name="Confirm dialog" parent="Panel" instance=ExtResource( 11 )]
+[node name="Confirm dialog" parent="Panel" instance=ExtResource( 10 )]
 
 visibility/visible = false
 margin/left = 42.0
