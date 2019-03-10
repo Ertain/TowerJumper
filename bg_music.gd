@@ -1,11 +1,11 @@
 extends StreamPlayer
 
-var bg_music_stream = ['res://Sound/copycat.ogg', 'res://Sound/happy bgm.ogg', 'res://Sound/endrit_tone.ogg',
-						'res://Sound/Bouncy.ogg', 'res://Sound/Moving higher.ogg','res://Sound/Neon Runner.ogg',
-						"res://Sound/That's it for today (LOOP).ogg", "res://Sound/Mandatory Overtime.ogg"]
+var bg_music_stream = ['res://Music/copycat.ogg', 'res://Music/happy bgm.ogg', 'res://Music/endrit_tone.ogg',
+						'res://Music/Bouncy.ogg', 'res://Music/Moving higher.ogg','res://Music/Neon Runner.ogg',
+						"res://Music/That's it for today (LOOP).ogg", "res://Music/Mandatory Overtime.ogg"]
 
 func _ready():
-	# Set the mood for each level! Match the music to each color.
+	# Set the mood for each level! Match the music to each color (the first color code in the array).
 	# Here's how the music breaks down:
 	#	'cea7e5' => 'That's it for today.ogg'
 	#   'f5fd99' => 'copycat.ogg'
@@ -15,6 +15,9 @@ func _ready():
 	#   'DB9DC5' => 'Moving higher.ogg'
 	#	'fcfff6' => 'Neon Runner.ogg'
     #   '93eebd' => 'Mandatory Overtime.ogg'
+	#	'fbfdf0' => '?'
+	#	'27ebe8' => '?'
+	#	'334455' => '?'
 	if global.current_palette[0] == 'f5fd99':
 		var current_music = load( bg_music_stream[0] )
 		set_stream(current_music)
