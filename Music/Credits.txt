@@ -34,5 +34,8 @@
 "Cue" by TAD under the CC0 license
   Source: https://opengameart.org/content/beat-compilation
 
-"brunumh" by DijitaL under the GPL 3.0
+"brunumh" by DijitaL under the GPL 3.0 license
   Source: https://opengameart.org/content/bunumh
+
+"n os" by Flofflewoffle Flooferwoofer under the CC0 license
+  Source: https://opengameart.org/content/beat-1
