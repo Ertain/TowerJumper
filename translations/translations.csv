@@ -3,10 +3,8 @@ PAUSE_MENU_TITLE,Pause,,
 ABOUT_BUTTON,About,,
 RETURN_TO_GAME_BUTTON,Return to game,,
 EXIT_GAME_BUTTON,Exit game,,
-ABOUT_TEXT,"Copyright (C) 2018 Pipoypipa Games
+ABOUT_TEXT,"Copyright (C) 2018, 2019 Pipoypipa Games
 
 Licensed under the terms of the GNU General Public License v3
-
-UI elements by Kenney Vleugels (www.kenney.nl) under CC0 license
 
 More copyright information is available in the ""Credits.txt"" file of main Github repository",,
