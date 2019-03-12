@@ -31,7 +31,7 @@ var decal = preload("res://Scenes/decal.tscn")
 onready var last_safe_rotation = axis.get_rotation().y
 
 var platforms_counter = 0
-var rotation_range = Vector2(0,0)
+var rotation_range = Vector3(0,0,0)
 var movement_limited = false
 
 export (int) var n_platforms_to_meteorize = 3
@@ -39,11 +39,12 @@ export (int) var n_platforms_to_meteorize = 3
 var meteor = false
 var color
 
-func limit_rotation_range(allowed_range):	
+# z is the height
+func limit_rotation_range(allowed_range):
 	movement_limited = true
 	var first  = normalize_rot(allowed_range.x)
 	var second = normalize_rot(allowed_range.y)
-	rotation_range = Vector2(first, second)
+	rotation_range = Vector3(first, second, allowed_range.z)
 
 
 func unlimit_rotation_range():	
@@ -72,18 +73,18 @@ func die():
 		die_sound.play(0)
 		
 	big_splash.set_emitting(true)
-	ball.queue_free()
 	area.queue_free()	
+	ball.hide()
 	
-	get_node("Timer").start()
+	get_node("Timer").start()	
 
 func block_camera():
 	rigid_2.set_sleeping(true)
 
 func release_camera():	
-	rigid_2.set_sleeping(false)	
+	rigid_2.set_sleeping(false)
 
-func on_platform_passed():	
+func on_platform_passed():
 	release_camera()
 	rigid_2.set_linear_velocity(rigid.get_linear_velocity())
 		
@@ -100,7 +101,7 @@ func on_platform_passed():
 	if (platforms_counter >= n_platforms_to_meteorize):
 		meteor_particles.set_emitting(true)
 		meteorize()
-					
+
 
 func lock_rot():	
 	last_safe_rotation = axis.get_rotation_deg().y	
@@ -118,6 +119,17 @@ func set_player_rotation (value):
 	axis.set_rotation_deg(Vector3(0,value,0))
 	camera_axis.set_rotation_deg(Vector3(0,value,0))
 
+func end_animation():
+	ball.hide()
+	rigid.set_linear_velocity(Vector3(0,0,0))
+	rigid.set_gravity_scale(0)
+	rigid_2.set_linear_velocity(Vector3(0,0,0))
+	rigid_2.set_gravity_scale(0)
+	idle_particles.set_emitting(false)
+	trail.set_emitting(false)
+	
+	die_particles.set_emitting(true)
+	
 
 func is_in_range (v, r_a, r_b):
 	return v > r_a and v < r_b
@@ -126,9 +138,9 @@ func is_in_range (v, r_a, r_b):
 func _on_set_rotation (rot):
 	var intent_rotation = rot + last_safe_rotation
 	var current_rotation = axis.get_rotation_deg().y;	
-	var has_collided = false		
-	
-	if (movement_limited):									
+	var has_collided = false
+		
+	if (movement_limited and self != null and ball.get_global_transform().origin.y < rotation_range.z): # check altitude of the ball						
 		var local_rotation_range = Vector2(0,0)
 		
 		if (current_rotation >= 0):
@@ -143,33 +155,23 @@ func _on_set_rotation (rot):
 			var diff_b = abs(current_rotation - local_rotation_range.y)
 			
 			if (diff_a < diff_b):
-				intent_rotation = rotation_range.x - 1
+				intent_rotation = rotation_range.x - 0.1
 			else:
-				intent_rotation = rotation_range.y + 1 
+				intent_rotation = rotation_range.y + 0.1
 				
 			has_collided = true 		
 		
 		if (current_rotation < local_rotation_range.x and intent_rotation > local_rotation_range.x):
-			intent_rotation = local_rotation_range.x - 1
+			intent_rotation = local_rotation_range.x - 0.1
 			has_collided = true		
 		if (current_rotation > local_rotation_range.y and intent_rotation < local_rotation_range.y):
-			intent_rotation = local_rotation_range.y + 1
+			intent_rotation = local_rotation_range.y + 0.1
 			has_collided = true 
 	
 	set_player_rotation(intent_rotation)
 	return !has_collided
 
-func end_animation():
-	ball.queue_free()	
-	rigid.set_linear_velocity(Vector3(0,0,0))
-	rigid.set_gravity_scale(0)
-	rigid_2.set_linear_velocity(Vector3(0,0,0))
-	rigid_2.set_gravity_scale(0)
-	idle_particles.set_emitting(false)
-	trail.set_emitting(false)
-	
-	die_particles.set_emitting(true)
-	
+
 		
 func _on_Area_body_enter(body):	
 	rigid.set_linear_velocity(Vector3(0,0,0))
