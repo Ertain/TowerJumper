@@ -4,7 +4,7 @@ var bg_music_stream = ['res://Music/copycat.ogg', 'res://Music/happy bgm.ogg', '
 						'res://Music/Bouncy.ogg', 'res://Music/Moving higher.ogg','res://Music/Neon Runner.ogg',
 						"res://Music/That's it for today (LOOP).ogg", "res://Music/Mandatory Overtime.ogg",
 						"res://Music/Clouds.ogg", "res://Music/Cue.ogg", "res://Music/bunumh.ogg",
-						"res://Music/n os.ogg"]
+						"res://Music/n os.ogg", "res://Music/Estrella de Mar.ogg"]
 
 func _ready():
 	# Set the mood for each level! Match the music to each color (the first color code in the array).
@@ -21,7 +21,7 @@ func _ready():
 	#	'27ebe8' => 'Cue.ogg'
 	#	'334455' => 'bunumh.ogg'
 	#	'df3819' => 'n os.ogg'
-	#	'8b64fa' => '?'
+	#	'8b64fa' => 'Estrella de Mar'
 	if global.current_palette[0] == 'f5fd99':
 		var current_music = load( bg_music_stream[0] )
 		set_stream(current_music)
@@ -57,6 +57,9 @@ func _ready():
 		set_stream( current_music )
 	elif global.current_palette[0] == 'df3819':
 		var current_music = load( bg_music_stream[11] )
+		set_stream( current_music )
+	elif global.current_palette[0] == '8b64fa':
+		var current_music = load( bg_music_stream[12] )
 		set_stream( current_music )
 	else:
 		_print_palette(global.current_palette)
